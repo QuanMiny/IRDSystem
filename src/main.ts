@@ -5,6 +5,9 @@ import App from './App.vue'
 // reset style sheet
 import '@/styles/reset.scss'
 
+// 公共样式
+import '@/styles/common.scss'
+
 import router from '@/routes'
 
 import pinia from '@/stores'

@@ -1,0 +1,17 @@
+@import './iconfont.scss';
+
+/* flex */
+.flx-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* clearfix */
+.clearfix::after {
+  display: block;
+  height: 0;
+  overflow: hidden;
+  clear: both;
+  content: "";
+}
