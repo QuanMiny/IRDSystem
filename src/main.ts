@@ -8,7 +8,7 @@ import '@/styles/reset.scss'
 // 公共样式
 import '@/styles/common.scss'
 
-import router from '@/routes'
+import router from '@/routers'
 
 import pinia from '@/stores'
 
