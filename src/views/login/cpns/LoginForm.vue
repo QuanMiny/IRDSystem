@@ -1,7 +1,7 @@
 <template>
   <el-form ref="loginFormRef" :model="account" :rules="rules">
-    <el-form-item prop="name">
-      <el-input v-model="account.name" placeholder="用户名：admin/vistor">
+    <el-form-item prop="username">
+      <el-input v-model="account.username" placeholder="用户名：admin/vistor">
         <template #prefix> <i class="iconfont icon-user"></i> </template>
       </el-input>
     </el-form-item>
@@ -17,18 +17,22 @@
 </template>
 
 <script setup lang="ts">
-import type { FormInstance } from 'element-plus'
 import { reactive, ref } from 'vue'
-// import localCache from '@/utils/cache'
-// import { useLoginStoreWithOut } from '@/store/login'
+import type { FormInstance } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { HOME_URL } from '@/config'
+import { setWithExpires, getWithExpires, localRemove } from '@/utils/cache'
+import { Login } from '@/api/interface'
+import { loginApi } from '@/api/modules/login'
+import { useUserStore } from '@/stores/modules/user'
+import { initDynamicRouter } from '@/routers/dynamicRouter'
 
-// const LoginStore = useLoginStoreWithOut()
+const router = useRouter()
+const userStore = useUserStore()
 
-const account = reactive({
-  // name: localCache.getCache('name') ?? '',
-  // password: localCache.getCache('password') ?? ''
-  name: '',
-  password: ''
+const account: Login.ReqLoginForm = reactive({
+  username: getWithExpires('ird-name') ?? '', // 会自动清除过期存储
+  password: getWithExpires('ird-pwd') ?? ''
 })
 
 const rules = {
@@ -48,21 +52,31 @@ const rules = {
 
 const loginFormRef = ref<FormInstance>()
 
-const isKeepPassword = ref(false)
+const isKeepPassword = ref(true)
 
 const loginAction = () => {
-  loginFormRef.value?.validate((valid) => {
+  loginFormRef.value?.validate(async (valid) => {
     if (valid) {
-      // 1.判断是否记住密码
-      // if (isKeepPassword.value) {
-      //   localCache.setCache('name', account.name)
-      //   localCache.setCache('password', account.password)
-      // } else {
-      //   localCache.deleteCache('name')
-      //   localCache.deleteCache('password')
-      // }
-      // 2.登录验证
-      // LoginStore.accountLoginAction({ ...account })
+      // 1.登录验证
+      let res = await loginApi(account)
+      // 2.登录成功后 判断是否记住密码  设置缓存 保存用户数据 跳转主页
+      if (res.code == 200) {
+        // 缓存
+        if (isKeepPassword.value) {
+          setWithExpires('ird-name', account.username)
+          setWithExpires('ird-pwd', account.password)
+        } else {
+          localRemove('ird-name')
+          localRemove('ird-pwd')
+        }
+        // store存储数据
+        // 设置token
+        userStore.setToken(res.data.access_token)
+        // 动态加载路由
+        await initDynamicRouter()
+        // 跳转主页
+        router.push(HOME_URL)
+      }
     }
   })
 }
