@@ -8,7 +8,6 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const viteEnv = loadEnv(mode, process.cwd())
-  console.log(viteEnv)
   return {
     base: './',
     resolve: {
@@ -19,7 +18,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     server: {
       host: '0.0.0.0',
       port: viteEnv.VITE_PORT as unknown as number,
-      open: viteEnv.VITE_OPEN,
       proxy: {
         '/api': {
           target: viteEnv.VITE_PROXY,
