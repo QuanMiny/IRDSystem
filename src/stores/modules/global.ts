@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { GlobalState } from '@/stores/interface'
+import piniaPersistConfig from '@/stores/helper/persist'
 
 export const useGlobalStore = defineStore({
   id: 'ird-global',
@@ -7,5 +8,6 @@ export const useGlobalStore = defineStore({
     isDark: false
   }),
   getters: {},
-  actions: {}
+  actions: {},
+  persist: piniaPersistConfig('ird-global')
 })
