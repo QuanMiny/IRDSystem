@@ -28,7 +28,7 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .menu-icon {
   margin-right: 5px;
   text-align: center;

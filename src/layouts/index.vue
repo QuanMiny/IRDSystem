@@ -1,6 +1,6 @@
 <template>
   <el-container class="layout">
-    <el-aside class="aside-container">
+    <el-aside>
       <div class="aside" :style="{ width: isCollapse ? '65px' : '210px' }">
         <div class="logo">
           <img class="logo-img" src="@/assets/images/logo.png" alt="logo" />
@@ -53,6 +53,6 @@ const isCollapse = ref(false)
 const activeMenu = computed(() => route.path)
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import './index.scss';
 </style>

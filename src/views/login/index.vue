@@ -49,6 +49,6 @@ const handleSubmitClick = () => {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import './index.scss';
 </style>
