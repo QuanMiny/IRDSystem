@@ -24,15 +24,7 @@
         <ToolBarLeft />
         <ToolBarRight />
       </el-header>
-      <el-main>
-        <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in" appear>
-            <keep-alive>
-              <component :is="Component"></component>
-            </keep-alive>
-          </transition>
-        </router-view>
-      </el-main>
+      <Main />
     </el-container>
   </el-container>
 </template>
@@ -41,10 +33,11 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/modules/auth'
-import SubMenu from './cpns/Menu/SubMenu.vue'
 import { useGlobalStore } from '@/stores/modules/global'
+import SubMenu from './cpns/Menu/SubMenu.vue'
 import ToolBarLeft from './cpns/Header/ToolBarLeft.vue'
 import ToolBarRight from './cpns/Header/ToolBarRight.vue'
+import Main from './cpns/Main/index.vue'
 
 const route = useRoute()
 const authStore = useAuthStore()
