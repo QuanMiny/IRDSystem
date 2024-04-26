@@ -1,5 +1,6 @@
 /* GlobalState */
 export interface GlobalState {
+  isCollapse: boolean
   isDark: boolean
 }
 

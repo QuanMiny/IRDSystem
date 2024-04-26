@@ -5,9 +5,14 @@ import piniaPersistConfig from '@/stores/helper/persist'
 export const useGlobalStore = defineStore({
   id: 'ird-global',
   state: (): GlobalState => ({
+    isCollapse: false,
     isDark: false
   }),
   getters: {},
-  actions: {},
+  actions: {
+    setCollapseState(state: boolean) {
+      this.isCollapse = state
+    }
+  },
   persist: piniaPersistConfig('ird-global')
 })

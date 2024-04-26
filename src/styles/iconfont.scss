@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'iconfont';  /* Project id 4523094 */
-  src: url('//at.alicdn.com/t/c/font_4523094_zuxncf8jdzd.woff2?t=1714050168651') format('woff2'),
-       url('//at.alicdn.com/t/c/font_4523094_zuxncf8jdzd.woff?t=1714050168651') format('woff'),
-       url('//at.alicdn.com/t/c/font_4523094_zuxncf8jdzd.ttf?t=1714050168651') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_4523094_xyzp27lqzvs.woff2?t=1714100780404') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4523094_xyzp27lqzvs.woff?t=1714100780404') format('woff'),
+       url('//at.alicdn.com/t/c/font_4523094_xyzp27lqzvs.ttf?t=1714100780404') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.toolbar-icon.iconfont {
+  font-size: 22px;
 }
 
 .icon-user:before {
@@ -115,4 +119,12 @@
 
 .icon-suo:before {
   content: "\e6b5";
+}
+
+.icon-tishi:before {
+  content: "\e6b7";
+}
+
+.icon-attachment:before {
+  content: "\e7e1";
 }
