@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'iconfont';  /* Project id 4523094 */
-  src: url('//at.alicdn.com/t/c/font_4523094_xyzp27lqzvs.woff2?t=1714100780404') format('woff2'),
-       url('//at.alicdn.com/t/c/font_4523094_xyzp27lqzvs.woff?t=1714100780404') format('woff'),
-       url('//at.alicdn.com/t/c/font_4523094_xyzp27lqzvs.ttf?t=1714100780404') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_4523094_i6jj8pfp8yi.woff2?t=1714206693968') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4523094_i6jj8pfp8yi.woff?t=1714206693968') format('woff'),
+       url('//at.alicdn.com/t/c/font_4523094_i6jj8pfp8yi.ttf?t=1714206693968') format('truetype');
 }
 
 .iconfont {
@@ -127,4 +127,32 @@
 
 .icon-attachment:before {
   content: "\e7e1";
+}
+
+.icon-close-circle:before {
+  content: "\e77d";
+}
+
+.icon-minus-circle:before {
+  content: "\e780";
+}
+
+.icon-fold-closed:before {
+  content: "\e6c1";
+}
+
+.icon-d-arrow-left:before {
+  content: "\e668";
+}
+
+.icon-d-arrow-right:before {
+  content: "\e669";
+}
+
+.icon-down:before {
+  content: "\e6b8";
+}
+
+.icon-sync:before {
+  content: "\e786";
 }
