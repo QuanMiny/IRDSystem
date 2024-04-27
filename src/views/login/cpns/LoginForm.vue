@@ -25,10 +25,12 @@ import { setWithExpires, getWithExpires, localRemove } from '@/utils/cache'
 import { Login } from '@/api/interface'
 import { loginApi } from '@/api/modules/login'
 import { useUserStore } from '@/stores/modules/user'
+import { useTabsStore } from '@/stores/modules/tabs'
 import { initDynamicRouter } from '@/routers/dynamicRouter'
 
 const router = useRouter()
 const userStore = useUserStore()
+const tabsStore = useTabsStore()
 
 const account: Login.ReqLoginForm = reactive({
   username: getWithExpires('ird-name') ?? '', // 会自动清除过期存储
@@ -57,9 +59,9 @@ const isKeepPassword = ref(true)
 const loginAction = () => {
   loginFormRef.value?.validate(async (valid) => {
     if (valid) {
-      // 1.登录验证
+      // 登录验证
       let res = await loginApi(account)
-      // 2.登录成功后 判断是否记住密码  设置缓存 保存用户数据 跳转主页
+      // 登录成功后 判断是否记住密码  设置缓存 保存用户数据 跳转主页
       if (res.code == 200) {
         // 缓存
         if (isKeepPassword.value) {
@@ -69,11 +71,12 @@ const loginAction = () => {
           localRemove('ird-name')
           localRemove('ird-pwd')
         }
-        // store存储数据
         // 设置token
         userStore.setToken(res.data.access_token)
         // 动态加载路由
         await initDynamicRouter()
+        // 清空 tabs
+        tabsStore.setTabs([])
         // 跳转主页
         router.push(HOME_URL)
       }

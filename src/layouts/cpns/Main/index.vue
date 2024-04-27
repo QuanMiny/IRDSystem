@@ -1,4 +1,5 @@
 <template>
+  <Tabs />
   <el-main>
     <router-view v-slot="{ Component }">
       <transition name="fade-transform" mode="out-in" appear>
@@ -10,7 +11,9 @@
   </el-main>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Tabs from '@/layouts/cpns/Tabs/index.vue'
+</script>
 
 <style scoped lang="scss">
 @import './index.scss';
