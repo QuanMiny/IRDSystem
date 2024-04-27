@@ -13,15 +13,17 @@ export const useTabsStore = defineStore({
   }),
   getters: {},
   actions: {
+    // 添加tab
     async addTab(tabItem: TabsMenuProps) {
       if (this.tabsMenuList.every((item) => item.path !== tabItem.path)) {
         this.tabsMenuList.push(tabItem)
       }
-      // add keepalive
+      // keepalive
       if (!keepAliveStore.keepAliveNames.includes(tabItem.path) && tabItem.isKeepAlive) {
         keepAliveStore.addKeepAlive(tabItem.path)
       }
     },
+    // 移除tab
     async removeTab(tabPath: string, isCurrent: boolean = true) {
       if (isCurrent) {
         this.tabsMenuList.forEach((item, index) => {
@@ -32,12 +34,35 @@ export const useTabsStore = defineStore({
         })
       }
 
-      // remove keepalive
+      // keepalive
       const tabItem = this.tabsMenuList.find((item) => item.path === tabPath)
       tabItem?.isKeepAlive && keepAliveStore.removeKeepAlive(tabItem.path)
 
       this.tabsMenuList = this.tabsMenuList.filter((item) => item.path !== tabPath)
     },
+    async closeTabsOnSide(tabPath: string, type: 'left' | 'right') {
+      const currentIndex = this.tabsMenuList.findIndex((item) => item.path === tabPath)
+      if (currentIndex !== -1) {
+        const range =
+          type === 'left' ? [0, currentIndex] : [currentIndex + 1, this.tabsMenuList.length]
+        this.tabsMenuList = this.tabsMenuList.filter((item, index) => {
+          return index < range[0] || index >= range[1] || !item.close
+        })
+      }
+      // keepAlive
+      let keepAliveList = this.tabsMenuList.filter((item) => item.isKeepAlive)
+      keepAliveStore.keepAliveNames = keepAliveList.map((item) => item.path)
+    },
+    // 关闭多个tab
+    async closeMultipleTab(tabPath?: string) {
+      this.tabsMenuList = this.tabsMenuList.filter((item) => {
+        return item.path === tabPath || !item.close
+      })
+      // keepAlive
+      let keepAliveList = this.tabsMenuList.filter((item) => item.isKeepAlive)
+      keepAliveStore.keepAliveNames = keepAliveList.map((item) => item.path)
+    },
+
     async setTabs(tabsMenuList: TabsMenuProps[]) {
       this.tabsMenuList = tabsMenuList
     }
