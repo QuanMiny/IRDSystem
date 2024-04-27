@@ -33,3 +33,8 @@ export interface TabsMenuProps {
 export interface TabsState {
   tabsMenuList: TabsMenuProps[]
 }
+
+/* keepAliveState */
+export interface KeepAliveState {
+  keepAliveNames: string[]
+}
