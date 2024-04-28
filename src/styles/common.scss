@@ -50,3 +50,14 @@
   transition: all 0.2s;
   transform: translateX(30px);
 }
+
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--el-border-color-darker);
+  border-radius: 20px;
+}
