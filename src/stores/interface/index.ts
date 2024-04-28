@@ -1,7 +1,7 @@
 /* GlobalState */
 export interface GlobalState {
   isCollapse: boolean
-  isDark: boolean
+  primary: string
 }
 
 /* UserState */

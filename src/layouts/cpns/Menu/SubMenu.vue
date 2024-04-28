@@ -37,12 +37,7 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
 }
 
 .el-menu-item.is-active {
-  background-color: #1177b0;
+  background-color: var(--el-color-primary);
   color: #fff;
 }
-
-// .el-menu-item,
-// .el-sub-menu {
-//   background-color: #eee;
-// }
 </style>
