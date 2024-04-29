@@ -1,7 +1,23 @@
 <template>
-  <div class="">waterChart</div>
+  <div class="card chart-box">
+    <ECharts :option="option" />
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts" name="waterChart">
+import { ECOption } from '@/components/ECharts/config'
+import ECharts from '@/components/ECharts/index.vue'
 
-<style scoped lang="scss"></style>
+const option = {
+  series: [
+    {
+      type: 'liquidFill',
+      data: [0.6, 0.5, 0.4, 0.3]
+    }
+  ]
+} as ECOption
+</script>
+
+<style scoped lang="scss">
+@import './index.scss';
+</style>
