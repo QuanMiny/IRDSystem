@@ -10,6 +10,7 @@ declare module 'vue' {
     403: typeof import('./src/components/ErrorMessage/403.vue')['default']
     404: typeof import('./src/components/ErrorMessage/404.vue')['default']
     500: typeof import('./src/components/ErrorMessage/500.vue')['default']
+    ECharts: typeof import('./src/components/ECharts/index.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
