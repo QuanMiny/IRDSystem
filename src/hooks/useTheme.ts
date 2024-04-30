@@ -1,9 +1,11 @@
 import { DEFAULT_PRIMARY } from '@/config'
 import { useGlobalStore } from '@/stores/modules/global'
 import { getLightColor } from '@/utils/color'
+import { storeToRefs } from 'pinia'
 
 export const useTheme = () => {
   const globalStore = useGlobalStore()
+  const { primary } = storeToRefs(globalStore)
 
   // 修改主题颜色
   const changePrimary = (val: string | null) => {
@@ -19,7 +21,7 @@ export const useTheme = () => {
   }
 
   const initTheme = () => {
-    changePrimary(DEFAULT_PRIMARY)
+    changePrimary(primary.value)
   }
 
   return {
