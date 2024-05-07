@@ -9,7 +9,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const viteEnv = loadEnv(mode, process.cwd())
   return {
-    base: './',
+    base: '/',
     resolve: {
       alias: {
         '@': resolve(__dirname, './src')
@@ -34,6 +34,26 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       Components({
         resolvers: [ElementPlusResolver()]
       })
-    ]
+    ],
+    esbuild: {
+      pure: viteEnv.VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : []
+    },
+    build: {
+      outDir: 'dist',
+      minify: 'esbuild',
+      sourcemap: false,
+      // 禁用 gzip 压缩大小报告，可略微减少打包时间
+      reportCompressedSize: true,
+      // 规定触发警告的 chunk 大小
+      chunkSizeWarningLimit: 2000,
+      rollupOptions: {
+        output: {
+          // Static resource classification and packaging
+          chunkFileNames: 'assets/js/[name]-[hash].js',
+          entryFileNames: 'assets/js/[name]-[hash].js',
+          assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
+        }
+      }
+    }
   }
 })
