@@ -11,6 +11,7 @@
     "lint:fix": "eslint --fix --ext .js,.ts,.vue ./src"
   },
   "dependencies": {
+    "@dataview/datav-vue3": "0.0.0-test.1672506674342",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.6.8",
     "echarts": "^5.5.0",
