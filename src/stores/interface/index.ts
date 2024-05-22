@@ -7,7 +7,10 @@ export interface GlobalState {
 /* UserState */
 export interface UserState {
   token: string
-  userInfo: { name: string }
+  userInfo: {
+    username: string
+    roleId: number
+  }
 }
 
 /* AuthState */

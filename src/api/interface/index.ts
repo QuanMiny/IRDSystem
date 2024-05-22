@@ -16,6 +16,9 @@ export namespace Login {
     password: string
   }
   export interface ResLogin {
-    access_token: string
+    id: number
+    username: string
+    token: string
+    role_id: number
   }
 }

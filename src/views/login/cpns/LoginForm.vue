@@ -71,8 +71,8 @@ const loginAction = () => {
           localRemove('ird-name')
           localRemove('ird-pwd')
         }
-        // 设置token
-        userStore.setToken(res.data.access_token)
+        // 设置用户信息 包括token
+        userStore.setUserInfo(res.data)
         // 动态加载路由
         await initDynamicRouter()
         // 清空 tabs

@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { logoutApi } from '@/api/modules/login'
 import { LOGIN_URL } from '@/config'
 import router from '@/routers'
 import { useUserStore } from '@/stores/modules/user'
@@ -32,8 +31,7 @@ const logout = () => {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
     type: 'warning'
-  }).then(async () => {
-    await logoutApi()
+  }).then(() => {
     userStore.setToken('')
     router.replace(LOGIN_URL)
     ElMessage.success('退出登录成功！')

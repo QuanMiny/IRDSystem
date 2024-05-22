@@ -11,11 +11,11 @@ export const loginApi = (params: Login.ReqLoginForm) => {
 }
 
 // 获取菜单列表
-export const getAuthMenuListApi = () => {
-  return http.get<Menu.MenuOptions[]>('/menu/list')
+export const getAuthMenuListApi = (roleId: number) => {
+  return http.get<Menu.MenuOptions[]>(`/menu/list/${roleId}`)
 }
 
 // 用户退出登录
-export const logoutApi = () => {
-  return http.post('/logout')
-}
+// export const logoutApi = () => {
+//   return http.post('/logout')
+// }

@@ -3,6 +3,10 @@ import { AuthState } from '@/stores/interface'
 import { getAuthMenuListApi } from '@/api/modules/login'
 import { getAllBreadcrumbList, getFlatMenuList, getShowMenuList } from '@/utils'
 
+import { useUserStore } from '@/stores/modules/user'
+import router from '@/routers'
+import { LOGIN_URL } from '@/config'
+
 export const useAuthStore = defineStore({
   id: 'ird-auth',
   state: (): AuthState => ({
@@ -25,8 +29,21 @@ export const useAuthStore = defineStore({
   },
   actions: {
     async getAuthMenuList() {
-      const { data } = await getAuthMenuListApi()
-      this.authMenuList = data
+      const userStore = useUserStore()
+      try {
+        const res = await getAuthMenuListApi(userStore.userInfo.roleId)
+        if (res.code === 200) {
+          this.authMenuList = res.data
+        } else {
+          // token无效 或者 菜单列表为空，则跳转到登录页
+          console.log(res.msg)
+          this.authMenuList = []
+          userStore.setToken('')
+          router.replace(LOGIN_URL)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 })

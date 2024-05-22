@@ -5,6 +5,7 @@ import axios, {
   AxiosResponse
 } from 'axios'
 import { ResultData } from './interface'
+import { useUserStore } from '@/stores/modules/user'
 
 const config = {
   // 默认地址请求地址，可在 .env.** 文件中修改
@@ -26,10 +27,8 @@ class Http {
     Http.axiosInstance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
         // 为请求头对象，添加 Token 验证的 Authorization 字段
-        // const token = window.sessionStorage.getItem('token')
-        // if (token) {
-        //   config.headers.Authorization = token
-        // }
+        const userStore = useUserStore()
+        config.headers.Authorization = userStore.token
         return config
       },
       (error: string) => {
