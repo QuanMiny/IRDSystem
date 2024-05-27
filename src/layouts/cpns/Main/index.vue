@@ -15,10 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import { VNode, computed, h } from 'vue'
+import { VNode, computed, h, onBeforeUnmount, ref } from 'vue'
 import { RouteLocationNormalizedLoaded } from 'vue-router'
 import Tabs from '@/layouts/cpns/Tabs/index.vue'
 import { useKeepAliveStore } from '@/stores/modules/keepAlive'
+import { useDebounceFn } from '@vueuse/core'
+import { useGlobalStore } from '@/stores/modules/global'
 
 const keepAliveStore = useKeepAliveStore()
 const keepAliveNames = computed(() => keepAliveStore.keepAliveNames)
@@ -38,6 +40,21 @@ function createComponentWrapper(component: VNode, route: RouteLocationNormalized
   }
   return h(wrapper)
 }
+
+const globalStore = useGlobalStore()
+const isCollapse = computed(() => globalStore.isCollapse)
+
+// 监听窗口大小变化，折叠侧边栏
+const screenWidth = ref(0)
+const listeningWindow = useDebounceFn(() => {
+  screenWidth.value = document.body.clientWidth
+  if (!isCollapse.value && screenWidth.value < 1200) globalStore.setCollapseState(true)
+  if (isCollapse.value && screenWidth.value > 1200) globalStore.setCollapseState(false)
+}, 100)
+window.addEventListener('resize', listeningWindow, false)
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', listeningWindow)
+})
 </script>
 
 <style scoped lang="scss">
