@@ -1,18 +1,18 @@
 <template>
   <el-form ref="loginFormRef" :model="account" :rules="rules">
     <el-form-item prop="username">
-      <el-input v-model="account.username" placeholder="用户名：admin/vistor">
+      <el-input v-model="account.username" placeholder="用户名">
         <template #prefix> <i class="iconfont icon-user"></i> </template>
       </el-input>
     </el-form-item>
     <el-form-item prop="password">
-      <el-input v-model="account.password" type="password" show-password placeholder="密码：123456">
+      <el-input v-model="account.password" type="password" show-password placeholder="密码">
         <template #prefix> <i class="iconfont icon-lock"></i> </template>
       </el-input>
     </el-form-item>
   </el-form>
   <div class="login-actions">
-    <el-checkbox v-model="isKeepPassword" class="remember"> 记住密码 </el-checkbox>
+    <el-checkbox v-model="account.rememberMe" class="remember"> 7天免登录 </el-checkbox>
   </div>
 </template>
 
@@ -21,7 +21,6 @@ import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { HOME_URL } from '@/config'
-import { setWithExpires, getWithExpires, localRemove } from '@/utils/cache'
 import { Login } from '@/api/interface'
 import { loginApi } from '@/api/modules/login'
 import { useUserStore } from '@/stores/modules/user'
@@ -33,8 +32,9 @@ const userStore = useUserStore()
 const tabsStore = useTabsStore()
 
 const account: Login.ReqLoginForm = reactive({
-  username: getWithExpires('ird-name') ?? '', // 会自动清除过期存储
-  password: getWithExpires('ird-pwd') ?? ''
+  username: '',
+  password: '',
+  rememberMe: false // 后端代码控制token过期时间 默认24h
 })
 
 const rules = {
@@ -54,23 +54,13 @@ const rules = {
 
 const loginFormRef = ref<FormInstance>()
 
-const isKeepPassword = ref(true)
-
 const loginAction = () => {
   loginFormRef.value?.validate(async (valid) => {
     if (valid) {
       // 登录验证
       let res = await loginApi(account)
-      // 登录成功后 判断是否记住密码  设置缓存 保存用户数据 跳转主页
+      // 登录成功后 保存用户数据 跳转主页
       if (res.code == 200) {
-        // 缓存
-        if (isKeepPassword.value) {
-          setWithExpires('ird-name', account.username)
-          setWithExpires('ird-pwd', account.password)
-        } else {
-          localRemove('ird-name')
-          localRemove('ird-pwd')
-        }
         // 设置用户信息 包括token
         userStore.setUserInfo(res.data)
         // 动态加载路由
