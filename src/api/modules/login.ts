@@ -10,6 +10,11 @@ export const loginApi = (params: Login.ReqLoginForm) => {
   return http.post<Login.ResLogin>('/login', params)
 }
 
+// 用户注册
+export const registerApi = (params: Login.ReqRegisterForm) => {
+  return http.post<Login.ResRegister>('/user', params)
+}
+
 // 获取菜单列表
 export const getAuthMenuListApi = (roleId: number) => {
   return http.get<Menu.MenuOptions[]>(`/menu/list/${roleId}`)

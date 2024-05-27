@@ -14,7 +14,7 @@
             <LoginForm ref="loginRef"></LoginForm>
           </div>
           <div v-else>
-            <RegisterForm ref="registerRef"></RegisterForm>
+            <RegisterForm ref="registerRef" @go-login="isLogin = true"></RegisterForm>
           </div>
         </transition>
         <div class="login-btns">

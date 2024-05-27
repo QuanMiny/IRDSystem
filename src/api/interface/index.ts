@@ -22,4 +22,9 @@ export namespace Login {
     token: string
     role_id: number
   }
+  export interface ReqRegisterForm {
+    username: string
+    password: string
+  }
+  export type ResRegister = string | null
 }

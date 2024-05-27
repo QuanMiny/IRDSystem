@@ -26,6 +26,7 @@ import { loginApi } from '@/api/modules/login'
 import { useUserStore } from '@/stores/modules/user'
 import { useTabsStore } from '@/stores/modules/tabs'
 import { initDynamicRouter } from '@/routers/dynamicRouter'
+import { ElMessage } from 'element-plus'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -61,6 +62,10 @@ const loginAction = () => {
       let res = await loginApi(account)
       // 登录成功后 保存用户数据 跳转主页
       if (res.code == 200) {
+        ElMessage({
+          message: res.msg,
+          type: 'success'
+        })
         // 设置用户信息 包括token
         userStore.setUserInfo(res.data)
         // 动态加载路由
@@ -69,6 +74,11 @@ const loginAction = () => {
         tabsStore.setTabs([])
         // 跳转主页
         router.push(HOME_URL)
+      } else {
+        ElMessage({
+          message: res.msg,
+          type: 'error'
+        })
       }
     }
   })

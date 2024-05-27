@@ -27,8 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import type { FormInstance } from 'element-plus'
+import { ElMessage, type FormInstance } from 'element-plus'
 import { reactive, ref } from 'vue'
+import { registerApi } from '@/api/modules/login'
 
 const registerFormRef = ref<FormInstance>()
 
@@ -76,22 +77,29 @@ const rules = reactive({
   confirmPassword: [{ validator: validatePass2, trigger: 'blur' }]
 })
 
-// const emits = defineEmits(['goLogin'])
+const emits = defineEmits(['goLogin'])
 
 const registerAction = () => {
-  registerFormRef.value?.validate((valid) => {
+  registerFormRef.value?.validate(async (valid) => {
     if (valid) {
       // 1.注册
-      // const registerFlag = LoginStore.accountRegisterAction({
-      //   name: registerAccount.name,
-      //   password: registerAccount.password
-      // })
-      // // 注册成功切换登录页面
-      // registerFlag.then((val) => {
-      //   if (val) {
-      //     emits('goLogin', val)
-      //   }
-      // })
+      const res = await registerApi({
+        username: registerAccount.name,
+        password: registerAccount.password
+      })
+      // 注册成功切换登录页面
+      if (res.code === 200) {
+        ElMessage({
+          message: res.msg,
+          type: 'success'
+        })
+        emits('goLogin')
+      } else {
+        ElMessage({
+          message: res.msg,
+          type: 'error'
+        })
+      }
     }
   })
 }
