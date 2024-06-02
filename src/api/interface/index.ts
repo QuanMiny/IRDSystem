@@ -14,7 +14,7 @@ export namespace Login {
   export interface ReqLoginForm {
     username: string
     password: string
-    rememberMe: boolean
+    expire7d: boolean
   }
   export interface ResLogin {
     id: number

@@ -12,7 +12,7 @@
     </el-form-item>
   </el-form>
   <div class="login-actions">
-    <el-checkbox v-model="account.rememberMe" class="remember"> 7天免登录 </el-checkbox>
+    <el-checkbox v-model="account.expire7d" class="expire7d"> 7天免登录 </el-checkbox>
   </div>
 </template>
 
@@ -35,7 +35,7 @@ const tabsStore = useTabsStore()
 const account: Login.ReqLoginForm = reactive({
   username: '',
   password: '',
-  rememberMe: false // 后端代码控制token过期时间 默认24h
+  expire7d: false // 后端代码控制token过期时间 默认24h
 })
 
 const rules = {
@@ -96,7 +96,7 @@ defineExpose({
   width: 100%;
   justify-content: space-between;
   margin-bottom: 20px;
-  .el-checkbox.remember {
+  .el-checkbox.expire7d {
     height: 32px;
   }
 }
